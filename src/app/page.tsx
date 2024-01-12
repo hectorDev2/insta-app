@@ -1,17 +1,28 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import Image from "next/image";
 import { cookies } from "next/headers";
-import { AuthButtonsClient } from "./components/AuthButtonsClient";
-import { AuthButtonServer } from "./components/ButtonServer";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session === null) {
+    redirect("/login");
+  }
   const { data: posts } = await supabase.from("posts").select("*");
-  console.log(posts);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <AuthButtonServer />
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      {posts?.map((post) => (
+        <>
+          <p className="text-xl uppercase font-semibold" key={post.id}>
+            {post.title}
+          </p>
+          <p>{post.content}</p>
+        </>
+      ))}
     </main>
   );
 }

@@ -13,7 +13,6 @@ export default async function ContainerPosts() {
     redirect("/login");
   }
   const { data: posts } = await supabase.from("posts").select("*,users(*)");
-  console.log({ posts });
 
   return (
     <>
@@ -22,6 +21,7 @@ export default async function ContainerPosts() {
           const { title, content, likes, users: user, image } = post;
           return (
             <CardPost
+              key={post.id}
               likes={likes}
               title={title}
               content={content}

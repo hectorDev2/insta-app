@@ -10,6 +10,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import { UserEntity } from "../types/post";
+import { useStore } from "../store";
 
 export default function CardPost({
   title,
@@ -25,6 +26,8 @@ export default function CardPost({
   user: UserEntity;
 }) {
   const [liked, setLiked] = useState(false);
+
+  const posts = useStore((state: any) => state.posts);
 
   return (
     <Card className="w-[100%]">

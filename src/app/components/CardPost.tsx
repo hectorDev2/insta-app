@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { IconHeart, IconMessageCircle, IconShare } from "@tabler/icons-react";
 import {
   Card,
   CardHeader,
@@ -14,12 +15,16 @@ export default function CardPost({
   title,
   content,
   user,
+  image,
+  likes,
 }: {
   title: string;
   content: string;
+  image: string | null;
+  likes: number;
   user: UserEntity;
 }) {
-  const [isFollowed, setIsFollowed] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   return (
     <Card className="w-[100%]">
@@ -42,34 +47,38 @@ export default function CardPost({
         </div>
         <Button
           className={
-            isFollowed
-              ? "bg-transparent text-foreground border-default-200"
-              : ""
+            liked ? "bg-transparent text-foreground border-default-200" : ""
           }
           color="primary"
           radius="full"
           size="sm"
-          variant={isFollowed ? "bordered" : "solid"}
-          onPress={() => setIsFollowed(!isFollowed)}
+          variant={liked ? "bordered" : "solid"}
+          onPress={() => setLiked(!liked)}
         >
-          {isFollowed ? "Unfollow" : "Follow"}
+          {liked ? "like" : "disLiked"}
         </Button>
       </CardHeader>
       <CardBody className="px-1 py-0 text-small text-default-400  overflow-hidden">
-        <div className="max-h-[425px] overflow-hidden">
-          <img src="/post-1.jpeg" alt="" />
-        </div>
+        {image && (
+          <div className="max-h-[425px] overflow-hidden">
+            <img src={image} alt="" />
+          </div>
+        )}
         <h2 className="text-2xl font-semibold">{title}</h2>
         <span className="pt-2">{content}</span>
       </CardBody>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">4</p>
-          <p className=" text-default-400 text-small">Following</p>
+          <p className="font-semibold text-white text-small">{likes}</p>
+          <IconHeart />
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">97.1K</p>
-          <p className="text-default-400 text-small">Followers</p>
+          <p className="font-semibold text-default-400 text-small">2</p>
+          <IconMessageCircle />
+        </div>
+        <div className="flex gap-1">
+          <p className="font-semibold text-default-400 text-small">2</p>
+          <IconShare />
         </div>
       </CardFooter>
     </Card>

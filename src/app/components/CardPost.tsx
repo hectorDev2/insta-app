@@ -28,6 +28,7 @@ export default function CardPost({
   const [liked, setLiked] = useState(false);
 
   const posts = useStore((state: any) => state.posts);
+  console.log(posts);
 
   return (
     <Card className="w-[100%]">

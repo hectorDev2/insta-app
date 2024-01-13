@@ -3,8 +3,6 @@ import { Session } from "@supabase/auth-helpers-nextjs";
 import { useAuthSupaBase } from "../hooks/useAuthSupaBase";
 
 export const AuthButtonsClient = ({ session }: { session: Session | null }) => {
-  console.log(session);
-
   const [handleRegister, handleSignOut] = useAuthSupaBase();
 
   return (
